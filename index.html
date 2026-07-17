@@ -4,119 +4,915 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Matola — Caderno Artificial de Traduções Calãnísticas Moçambicanas</title>
-<meta name="description" content="A Matola é um caderno artificial que traduz conhecimento para Calão Moçambicano. Funciona 100% offline, sem internet, sem conta e sem recolher dados.">
+<meta name="description" content="A Matola é um caderno artificial que ensina em Calão Moçambicano. Funciona 100% offline, sem internet, sem conta, sem publicidade e sem recolher dados. Ela não te responde. Ela te ensina.">
+<meta name="theme-color" content="#000000">
+
+<meta property="og:title" content="Matola — Ela não te responde. Ela te ensina.">
+<meta property="og:description" content="Um caderno artificial que ensina em Calão Moçambicano. 100% offline.">
+<meta property="og:image" content="cm_logo.png">
+<meta property="og:type" content="website">
+
+<link rel="icon" href="cm_logo.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bodoni+Moda:opsz,wght@6..96,400;6..96,500&family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
 <style>
+  /* ═══════════════════════════════════════════════════
+     MATOLA — tokens
+     Preto e branco. Sem cor de acento: é a identidade
+     do app e do logo, e o Lundo tirou o verde de propósito.
+     ═══════════════════════════════════════════════════ */
+  :root {
+    --tinta:    #ffffff;   /* o branco do logo */
+    --papel:    #000000;   /* o preto do app  */
+    --superficie:#0a0a0a;
+    --pauta:    #242424;   /* as linhas do caderno */
+    --apagado:  #8a8a8a;
+    --sussurro: #5a5a5a;
+
+    --display: "Bodoni Moda", Georgia, serif;   /* a letra do próprio CM */
+    --corpo:   "IBM Plex Sans", system-ui, sans-serif;
+    --mono:    "IBM Plex Mono", ui-monospace, monospace;
+
+    --medida: 40rem;
+  }
+
   * { box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+  }
+
   body {
-    font-family: -apple-system, "Segoe UI", Roboto, sans-serif;
-    background: #000; color: #e8e8e8;
-    margin: 0; padding: 3rem 1.25rem 4rem;
-    line-height: 1.6;
+    margin: 0;
+    background: var(--papel);
+    color: var(--tinta);
+    font-family: var(--corpo);
+    font-weight: 300;
+    font-size: 1.02rem;
+    line-height: 1.7;
+    -webkit-font-smoothing: antialiased;
   }
-  main { max-width: 38rem; margin: 0 auto; }
-  .logo {
-    width: 84px; height: 84px; margin: 0 auto 1.5rem;
-    border: 2px solid #e8e8e8; border-radius: 50%;
-    display: flex; align-items: center; justify-content: center;
-    font-size: 1.5rem; font-weight: 700; letter-spacing: -1px;
+
+  .env { max-width: var(--medida); margin: 0 auto; padding: 0 1.4rem; }
+
+  a { color: var(--tinta); text-decoration-color: var(--sussurro); text-underline-offset: .25em; }
+  a:hover { text-decoration-color: var(--tinta); }
+  a:focus-visible, button:focus-visible {
+    outline: 2px solid var(--tinta); outline-offset: 3px;
   }
-  h1 { font-size: 2rem; text-align: center; margin: 0 0 .4rem; }
-  .slogan {
-    text-align: center; opacity: .55; font-style: italic;
-    margin-bottom: 3rem; font-size: 1.05rem;
+
+  /* ── A PAUTA ──────────────────────────────────────
+     Três linhas. É o livro que está por baixo do CM
+     no logo. Divide todas as secções da página.      */
+  .pauta {
+    height: 7px; margin: 4.5rem 0;
+    border-top: 1px solid var(--pauta);
+    border-bottom: 1px solid var(--pauta);
+    position: relative;
   }
-  h2 { font-size: 1.05rem; margin-top: 2.5rem; letter-spacing: .04em; text-transform: uppercase; opacity: .5; }
-  .lead { font-size: 1.1rem; }
-  ul { padding-left: 1.1rem; }
-  li { margin: .4rem 0; }
-  .nao li::marker { content: "✗  "; color: #666; }
-  .caixa {
-    border: 1px solid #2a2a2a; border-radius: 10px;
-    padding: 1.15rem 1.25rem; margin: 1.5rem 0;
-    background: #0b0b0b;
+  .pauta::after {
+    content: ""; position: absolute; left: 0; right: 0; top: 3px;
+    border-top: 1px solid var(--pauta);
   }
-  .links { display: flex; flex-wrap: wrap; gap: .75rem; margin-top: 1rem; }
-  .links a {
-    flex: 1 1 auto; text-align: center;
-    border: 1px solid #333; border-radius: 8px;
-    padding: .8rem 1rem; text-decoration: none; color: #e8e8e8;
-    transition: border-color .2s;
+
+  /* ── HERÓI ──────────────────────────────────────── */
+  header { padding: 4rem 0 0; text-align: center; }
+  header img {
+    width: 132px; height: auto; display: block; margin: 0 auto 1.75rem;
   }
-  .links a:hover { border-color: #888; }
-  a { color: #e8e8e8; }
-  footer {
-    margin-top: 4rem; padding-top: 1.5rem;
-    border-top: 1px solid #222;
-    font-size: .85rem; opacity: .45; text-align: center;
+  h1 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(3.4rem, 16vw, 5.5rem);
+    line-height: .92;
+    letter-spacing: -.02em;
+    margin: 0;
+  }
+  .lema {
+    font-family: var(--display);
+    font-style: italic;
+    font-size: clamp(1.05rem, 4.4vw, 1.3rem);
+    color: var(--apagado);
+    margin: 1rem 0 0;
+  }
+
+  /* ── A ASSINATURA ───────────────────────────────────
+     A tradução a acontecer. Formal em cinzento, miúdo,
+     minúsculas. Calão em branco, grande, maiúsculas —
+     na voz que a app usa mesmo. O contraste é o
+     argumento: não é sobre a Matola, é a Matola.       */
+  .traducao { margin: 3.25rem 0 0; }
+  .par { margin: 0 0 2rem; }
+  .par:last-child { margin-bottom: 0; }
+  .de {
+    font-family: var(--mono);
+    font-size: .78rem;
+    color: var(--sussurro);
+    letter-spacing: .02em;
+    margin: 0 0 .5rem;
+  }
+  .para {
+    font-size: clamp(1.35rem, 6vw, 1.9rem);
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: -.01em;
+    line-height: 1.25;
+    margin: 0;
+  }
+  .seta {
+    font-family: var(--mono);
+    color: var(--pauta);
+    font-size: .78rem;
+    margin: 0 0 .35rem;
+  }
+
+  /* ── SECÇÕES ────────────────────────────────────── */
+  .rotulo {
+    font-family: var(--mono);
+    font-size: .72rem;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+    color: var(--sussurro);
+    margin: 0 0 .9rem;
+  }
+  h2 {
+    font-family: var(--display);
+    font-weight: 400;
+    font-size: clamp(1.85rem, 7vw, 2.5rem);
+    line-height: 1.1;
+    letter-spacing: -.015em;
+    margin: 0 0 1.5rem;
+  }
+  h3 {
+    font-family: var(--corpo);
+    font-weight: 600;
+    font-size: 1rem;
+    letter-spacing: .01em;
+    margin: 2.25rem 0 .6rem;
+  }
+  p { margin: 0 0 1.1rem; }
+  p:last-child { margin-bottom: 0; }
+  strong { font-weight: 600; }
+  em { font-family: var(--display); font-style: italic; }
+
+  ul { padding-left: 1.1rem; margin: 0 0 1.1rem; }
+  li { margin: .35rem 0; }
+  .nao { list-style: none; padding-left: 0; }
+  .nao li { padding-left: 1.5rem; position: relative; }
+  .nao li::before {
+    content: "—"; position: absolute; left: 0;
+    color: var(--sussurro); font-family: var(--mono);
+  }
+
+  /* ── CAIXA TÉCNICA ──────────────────────────────── */
+  .tecnico {
+    font-family: var(--mono);
+    font-size: .85rem;
+    line-height: 1.85;
+    background: var(--superficie);
+    border: 1px solid var(--pauta);
+    border-radius: 3px;
+    padding: 1.1rem 1.2rem;
+    margin: 1.5rem 0;
+    overflow-x: auto;
+  }
+  .tecnico .cinza { color: var(--sussurro); }
+
+  /* ── CITAÇÃO / VOZ DO AUTOR ─────────────────────── */
+  blockquote cite {
+    display: block; margin-top: 1rem;
+    font-family: var(--mono); font-style: normal;
+    font-size: .74rem; letter-spacing: .1em; color: var(--sussurro);
+  }
+
+  .mono-inline { font-family: var(--mono); font-size: .88em; color: var(--apagado); }
+
+  blockquote {
+    margin: 1.75rem 0;
+    padding-left: 1.15rem;
+    border-left: 1px solid var(--pauta);
+    font-family: var(--display);
+    font-style: italic;
+    font-size: 1.12rem;
+    line-height: 1.55;
+    color: #d4d4d4;
+  }
+
+  /* ── AS CLASSES ─────────────────────────────────────
+     Números só aqui: é a única coisa na Matola que é
+     mesmo uma sequência ordenada.                      */
+  .classes { margin: 1.5rem 0 0; }
+  .classe {
+    display: grid;
+    grid-template-columns: 3.6rem 1fr;
+    gap: 1rem;
+    padding: 1rem 0;
+    border-top: 1px solid var(--pauta);
+    align-items: baseline;
+  }
+  .classe:last-child { border-bottom: 1px solid var(--pauta); }
+  .num {
+    font-family: var(--display);
+    font-size: 1.9rem;
+    line-height: 1;
+    color: var(--sussurro);
+  }
+  .classe.agora .num { color: var(--tinta); }
+  .classe h4 {
+    font-family: var(--corpo); font-weight: 600;
+    font-size: .95rem; margin: 0 0 .15rem;
+  }
+  .classe p { font-size: .88rem; color: var(--apagado); margin: 0; }
+  .agora-tag {
+    font-family: var(--mono); font-size: .65rem;
+    letter-spacing: .14em; border: 1px solid var(--pauta);
+    padding: .1rem .4rem; margin-left: .5rem; vertical-align: .12em;
+    color: var(--apagado);
+  }
+
+  /* ── AVISO ──────────────────────────────────────── */
+  .aviso {
+    border: 1px solid var(--pauta);
+    border-radius: 3px;
+    padding: 1.2rem 1.3rem;
+    margin: 1.75rem 0;
+    background: var(--superficie);
+  }
+  .aviso p:first-child { margin-top: 0; }
+
+  /* ── RODAPÉ ─────────────────────────────────────── */
+  footer { padding: 0 0 5rem; }
+  .docs { display: flex; flex-wrap: wrap; gap: .7rem; margin: 1.25rem 0 2.5rem; }
+  .docs a {
+    flex: 1 1 13rem;
+    text-align: center;
+    border: 1px solid var(--pauta);
+    border-radius: 3px;
+    padding: .85rem 1rem;
+    text-decoration: none;
+    font-size: .92rem;
+    transition: border-color .18s ease;
+  }
+  .docs a:hover { border-color: var(--apagado); }
+  .assinatura {
+    font-family: var(--mono);
+    font-size: .74rem;
+    color: var(--sussurro);
+    line-height: 1.9;
+    text-align: center;
+    letter-spacing: .02em;
   }
 </style>
 </head>
 <body>
+
+<header class="env">
+  <img src="cm_logo.png" alt="Logótipo da Matola: o monograma CM sobre um livro">
+  <h1>Matola</h1>
+  <p class="lema">Ela não te responde. Ela te ensina.</p>
+
+  <div class="traducao">
+    <div class="par">
+      <p class="de">português informal</p>
+      <p class="seta">↓</p>
+      <p class="para">Estás nice, boy?</p>
+    </div>
+  </div>
+</header>
+
+<div class="env"><div class="pauta"></div></div>
+
 <main>
 
-  <div class="logo">CM</div>
-  <h1>Matola</h1>
-  <p class="slogan">Ela não te responde. Ela te ensina.</p>
+  <!-- ══ O QUE É ══ -->
+  <section class="env">
+    <p class="rotulo">O que é</p>
+    <h2>Um caderno, não uma inteligência artificial</h2>
 
-  <p class="lead">
-    A Matola é um <strong>Caderno Artificial de Traduções Calãnísticas
-    Moçambicanas</strong>. Traduz conhecimento — dicionário, física, história,
-    álgebra, biologia — para a língua que já falas todos os dias.
-  </p>
-
-  <h2>Funciona onde não há rede</h2>
-  <p>
-    A Matola não tem permissão de acesso à internet. Não é promessa de
-    marketing: é uma limitação técnica imposta pelo próprio Android. Ela não
-    consegue enviar nada para lado nenhum, mesmo que quisesse.
-  </p>
-  <p>
-    No chapa. Na zona sem cobertura. Às três da manhã com zero saldo.
-    Funciona igual.
-  </p>
-
-  <h2>O que a Matola não faz</h2>
-  <ul class="nao">
-    <li>Não recolhe dados</li>
-    <li>Não pede conta nem registo</li>
-    <li>Não mostra publicidade</li>
-    <li>Não custa nada</li>
-  </ul>
-
-  <h2>Não é um chatbot</h2>
-  <p>
-    A Matola não inventa respostas. Reconhece o que estás a perguntar e monta a
-    tradução a partir dos caminhos que aprendeu. É um sistema de recuperação de
-    informação, não um modelo generativo. Por isso corre inteira dentro do teu
-    telemóvel.
-  </p>
-
-  <div class="caixa">
-    <strong>Esta é a 5.ª classe.</strong>
-    <p style="margin-bottom:0">
-      12.000 traduções calãnísticas. É a primeira versão pública, e ela sabe o
-      que ainda não sabe: há ambiguidade, há vocabulário que falta, há tropeços.
-      A 10.ª classe traz 150.000 traduções, melhor reconhecimento de intenção e
-      planos curriculares completos — tudo offline.
+    <p>
+      A <strong>Matola</strong> é um Caderno Artificial de Traduções
+      Calãnísticas Moçambicanas — um ambiente de estudo informal que corre
+      inteiro dentro de um telemóvel Android, sem internet.
     </p>
-  </div>
+    <p>
+      Ensina em <strong>Calão</strong>: a língua informal que se fala em
+      Maputo e nas outras províncias, nos mercados de dumba nengue, nos
+      chapas, na rua. A língua com que já falas — não a que te obrigam a usar
+      para aprender.
+    </p>
 
-  <h2>Requisitos</h2>
-  <p>Android 5.0 ou superior · 2 GB de RAM · 500 MB livres · <strong>18+</strong></p>
+    <blockquote>
+      Matola serve para te explicar. E não para te responder.
+    </blockquote>
+  </section>
 
-  <h2>Documentos</h2>
-  <div class="links">
-    <a href="politica-privacidade.html">Política de Privacidade</a>
-    <a href="termos-de-uso.html">Termos de Uso</a>
-  </div>
+  <div class="env"><div class="pauta"></div></div>
 
-  <h2>Contacto</h2>
-  <p><a href="mailto:lundomachava@gmail.com">lundomachava@gmail.com</a></p>
+  <!-- ══ NÃO TE RESPONDE ══ -->
+  <section class="env">
+    <p class="rotulo">A diferença</p>
+    <h2>Porque é que ela não te responde</h2>
 
-  <footer>
-    Matola — Maputo, Moçambique.
-  </footer>
+    <p>
+      Não quer dizer que ela não produz texto. Quer dizer que, quando percebe a
+      tua intenção, ela é capaz de montar uma <strong>tradução treinada</strong>
+      para simular uma resposta coerente — para parecer que está a entender
+      aquilo que escreves.
+    </p>
+    <p>
+      Tu perguntas. A Matola vasculha milhares de tags e escolhe a mais
+      provável para o que escreveste:
+    </p>
+
+    <div class="tecnico">
+      <span class="cinza">o que escreveste →</span> Explica como Moçambique é definido no mundo<br>
+      <br>
+      <span class="cinza">a tag que ela encontrou →</span> O_QUE_E_MOCAMBIQUE
+    </div>
+
+    <p>
+      Essa tag tem uma tradução treinada. É dela que a resposta é montada.
+    </p>
+
+    <h3>O que é uma tradução treinada</h3>
+    <p>
+      A Matola é feita de centenas de milhares de <strong>blocos</strong>. Cada
+      bloco tem três campos:
+    </p>
+    <div class="tecnico">
+      <span class="cinza">1 →</span> a tag &mdash; o título do bloco<br>
+      <span class="cinza">2 →</span> os exemplos de perguntas<br>
+      <span class="cinza">3 →</span> as traduções, escritas antes do treino
+    </div>
+    <p>
+      A tag é o factor principal: é ela que representa o bloco inteiro.
+    </p>
+    <p>
+      Mas há um detalhe que muda tudo. No fim, durante o treino,
+      <strong>a Matola desmonta tudo</strong>. Os blocos não ficam lá guardados
+      à espera de serem servidos. Quando tu perguntas, a resposta é
+      <em>remontada</em> — e é por isso que não existe resposta pronta em lado
+      nenhum.
+    </p>
+
+    <h3>É aqui que fica assustador</h3>
+    <p>
+      Ninguém programou <em>«usa este gatilho para responder a esta tag»</em>.
+      Não existe nenhuma lista a ligar a tua frase àquele bloco.
+    </p>
+    <p>
+      E mesmo assim ela acerta. Mesmo quando o gatilho
+      <strong>nunca existiu no treino</strong>. Mesmo quando ninguém o
+      escreveu, ninguém o preparou, ninguém o previu — ela encontra a tag
+      certa.
+    </p>
+    <p>
+      Parece que te está a entender. E é aí que está o truque: é uma
+      <strong>simulação de entendimento</strong>. O que ela faz é procurar,
+      entre milhares, a tag mais provável para o que está escrito. O resultado
+      parece compreensão. O mecanismo é escolha.
+    </p>
+
+    <h3>Então o que é que ela memoriza</h3>
+    <p>
+      Os <strong>blocos</strong>. Esses estão lá, treinados, e não mudam.
+    </p>
+    <p>
+      O que é <strong>aprendido</strong> é o caminho até eles — é isso que o
+      MVG-1 faz. A Matola não escreve nada de novo. Ela sabe onde está o que já
+      existe, e chega lá mesmo por caminhos que ninguém abriu.
+    </p>
+
+    <div class="aviso">
+      <p style="margin-bottom:0">
+        <strong>Não é perfeito.</strong> Com entradas confusas, ela cai em
+        desalinhamento ou má interpretação. Escolhe a tag errada e responde com
+        toda a confiança sobre outra coisa qualquer.
+      </p>
+    </div>
+  </section>
+
+  <!-- ══ CALÃO ══ -->
+  <section class="env">
+    <p class="rotulo">A língua</p>
+    <h2>O que é o Calão</h2>
+
+    <p>
+      Uma língua informal de origem bantu, associada a várias línguas locais,
+      que usa gírias e as mistura com palavras de outras línguas — inglês,
+      francês, italiano e português, a língua oficial de Moçambique.
+    </p>
+    <p>
+      É um cenário de adaptações e misturas, à procura de sofisticação através
+      de línguas modernas. Desde que mistures palavras em português e em
+      inglês, já estás a falar Calão.
+    </p>
+
+    <div class="tecnico">
+      <span class="cinza">formal &nbsp;→</span> Tudo bem contigo, macho?<br>
+      <span class="cinza">calão &nbsp;&nbsp;→</span> Estás nice, boy?
+    </div>
+
+    <p>
+      Falam-no jovens, adolescentes, adultos, idosos e até crianças. Mas é
+      considerado informal, e não é recomendado na educação: fala-se nos
+      mercados e na rua.
+    </p>
+    <p>
+      Uma criança que responde ao professor em Calão, no meio de uma aula
+      séria, está a faltar ao respeito. E responder aos pais em Calão costuma
+      passar a impressão de má-educação.
+    </p>
+    <p>
+      É uma disputa entre formal e informal. A Matola foi programada para
+      ensinar precisamente aquilo que não se pode dizer numa escola, numa
+      universidade ou numa conferência.
+    </p>
+  </section>
+
+  <div class="env"><div class="pauta"></div></div>
+
+  <!-- ══ COMO FUNCIONA ══ -->
+  <section class="env">
+    <p class="rotulo">Como funciona</p>
+    <h2>Neurociência e padrões</h2>
+
+    <p>
+      O cérebro funciona por impulsos eléctricos, e os neurónios são a parte
+      brilhante. O que ele faz melhor é <strong>reconhecer padrões</strong>.
+    </p>
+    <p>
+      Uma criança que nunca viu um plasma, mas já viu uma televisão antiga de
+      corcunda, chega a casa de um amigo e reconhece: <em>é uma televisão,
+      porque dá para assistir</em>. Ninguém lhe ensinou o que é um plasma. Ela
+      puxou o novo para um padrão que já tinha.
+    </p>
+    <p>
+      É assim que os modelos de ponta funcionam. Grandes redes neurais que
+      simulam quase perfeitamente o que o cérebro faz. Quando um modelo te
+      responde não é porque tem a resposta guardada — é porque aprendeu padrões
+      a partir de biliões de exemplos.
+    </p>
+
+    <h3>Onde a Matola entra</h3>
+    <div class="tecnico">
+      Transformers &nbsp;→ inspirados no &nbsp;→ cérebro humano<br>
+      Matola &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;→ inspirada nos &nbsp;→ transformers
+    </div>
+
+    <p>
+      Os transformers foram arquitectados com matrizes, optimização por
+      gradiente e camadas que transformam entradas em vectores, aprendendo por
+      pesos, sem regras explícitas.
+    </p>
+    <p>
+      A Matola não usa redes neurais como um ChatGPT, um Claude ou um DeepSeek.
+      Durante anos foi um ambiente de centenas de milhares de regras escritas à
+      mão. <strong>Já não é.</strong> Hoje o trabalho é do MVG-1 — e corre sem
+      GPU nenhuma.
+    </p>
+
+    <h3>Ela não infere conhecimento</h3>
+    <p>
+      A Matola não descobre factos novos sobre o mundo, e não tenta. Houve um
+      caminho antigo que ia por aí — deixou de ser o foco.
+    </p>
+    <p>
+      O que ela infere é a <strong>intenção</strong>: qual é a tag mais
+      provável para o que escreveste. O destino final da Matola é entregar uma
+      <strong>tradução fiel</strong>, não construir conhecimento.
+    </p>
+  </section>
+
+  <div class="env"><div class="pauta"></div></div>
+
+  <!-- ══ O MVG-1 ══ -->
+  <section class="env">
+    <p class="rotulo">O motor</p>
+    <h2>MVG-1 — Motor Vetorial de Gatilhos</h2>
+
+    <p>
+      É isto que está por baixo de tudo. Cada pergunta que fazes vira
+      <strong>dois vectores</strong>: um de <em>função</em> — o que queres
+      (definir, explicar, listar) — e um de <em>entidade</em> — sobre o quê
+      (pão, Moçambique, a capital de Moçambique).
+    </p>
+
+    <div class="tecnico">
+      S(t|Q) = g<span class="cinza">t</span> · [ α·cos(e<span class="cinza">Q</span>, a<span class="cinza">t</span>) + β·cos(f<span class="cinza">Q</span>, u<span class="cinza">t</span>) ]
+    </div>
+
+    <p>
+      Aquele <strong>g</strong> é um portão. E é multiplicativo, não somado —
+      de propósito. Se a entidade não bate, o portão fecha e o resultado é
+      zero, <strong>por mais bonita que seja a função</strong>. Uma pergunta
+      bem construída sobre a coisa errada não passa.
+    </p>
+
+    <h3>Ela sabe quando não sabe</h3>
+    <p>
+      Se nenhuma pontuação passar do nível do mar, a Matola
+      <strong>abstém-se</strong>. Pede que reformules, em vez de cair na
+      resposta errada com confiança. Isso é uma decisão de desenho, não uma
+      falha.
+    </p>
+
+    <div class="tecnico">
+      <span class="cinza">pergunta →</span> Explica qual é a capital de pão<br>
+      <br>
+      <span class="cinza">conflito →</span> 0.70 &nbsp;(duas entidades a puxar para lados opostos)<br>
+      <span class="cinza">melhor  →</span> 0.42<br>
+      <span class="cinza">mínimo  →</span> 0.45<br>
+      <br>
+      <span class="cinza">decisão →</span> ABSTENÇÃO
+    </div>
+
+    <h3>Palavras que nunca viu</h3>
+    <p>
+      A Matola nunca foi treinada com a palavra <em>definido</em>. Mas
+      <em>definido</em> e <em>define</em> partilham pedaços — <span
+      class="mono-inline">def</span>, <span class="mono-inline">efi</span>,
+      <span class="mono-inline">fin</span> — e a Matola constrói cada palavra a
+      partir dos seus pedaços. Os vectores saem parecidos por construção, sem
+      magia nenhuma.
+    </p>
+    <div class="tecnico">
+      cos( define , definido ) = 0.96 &nbsp;&nbsp;<span class="cinza">← sem nunca ter visto "definido"</span>
+    </div>
+
+    <h3>Sem listas escritas à mão</h3>
+    <p>
+      Ninguém escreveu uma lista de palavras importantes. A Matola percebe
+      sozinha, pela estatística: <em>o que</em>, <em>define</em> e
+      <em>explica</em> aparecem espalhados por todo o lado — logo, são função.
+      <em>Pão</em> aparece só num sítio — logo, é entidade. Isso emerge dos
+      dados, não de uma regra que alguém escreveu.
+    </p>
+
+    <h3>Onde é que ela treina</h3>
+    <p>
+      Não no teu telemóvel. O treino acontece uma vez, do lado do
+      desenvolvedor, em Python e com <strong>GPUs alugadas à Google</strong> —
+      pelo menos até ao Voluntário da 5.ª classificação. É trabalho pesado, e é
+      feito longe de ti.
+    </p>
+
+    <h3>O que corre no teu telemóvel</h3>
+    <p>
+      Só <strong>JavaScript</strong>. Nada de Python, nada de treino. O que vai
+      dentro da app são os pesos já treinados, e o JavaScript limita-se a fazer
+      produtos escalares: não aprende, não pensa, só verifica.
+    </p>
+
+    <div class="tecnico">
+      <span class="cinza">no desenvolvedor →</span> Python + GPU alugada &nbsp;<span class="cinza">— treino, uma vez</span><br>
+      <span class="cinza">o que viaja &nbsp;&nbsp;&nbsp;&nbsp;→</span> JSON &nbsp;<span class="cinza">— os pesos</span><br>
+      <span class="cinza">no teu telemóvel →</span> JavaScript &nbsp;<span class="cinza">— produto escalar</span><br>
+      <br>
+      64 dimensões · 24.000 tags · 23.006 fusões de expressões<br>
+      ~35.000 multiplicações por pergunta<br>
+      <br>
+      <span class="cinza">numa WebView de um telemóvel de entrada:</span> menos de 1 ms<br>
+      <span class="cinza">acerto ouro:</span> 96,5%
+    </div>
+    <p>
+      Do teu lado: sem GPU, sem matriz grande, sem servidor, sem nada do outro
+      lado.
+    </p>
+
+    <h3>Cada falha tem um número</h3>
+    <p>
+      Nenhuma matemática é invulnerável. O que este desenho garante é outra
+      coisa: quando a Matola erra, <strong>dá para medir onde</strong> — portão
+      baixo, margem curta, conflito alto. Não é uma caixa preta que falhou por
+      razões misteriosas. É um número que se lê.
+    </p>
+  </section>
+
+  <div class="env"><div class="pauta"></div></div>
+
+  <!-- ══ A CASA DE LONA ══ -->
+  <section class="env">
+    <p class="rotulo">O que ela era</p>
+    <h2>A casa de lona e a casa de blocos</h2>
+
+    <p>
+      Durante anos, a comparação honesta era esta.
+    </p>
+    <p>
+      A Matola era como uma casa coberta de lona plástica de todos os lados.
+      Com estacas a segurar o tecto de baixo para cima, barrotes, capulanas
+      amarradas a tapar buracos, e rochas em volta para se manter firme no
+      chão.
+    </p>
+    <p>
+      Abrigava pessoas. Mas num ciclone, ia abaixo. Tinha muitos truques para
+      ser uma casa — e mesmo assim era frágil.
+    </p>
+    <p>
+      Um transformer é uma casa de blocos e cimento. Tem fundação, engenharia
+      robusta, tudo calculado. Não precisa de estacas, arames nem rochas. Pode
+      vir a tempestade que vier: continua firme.
+    </p>
+
+    <blockquote>
+      A diferença está na estrutura. E não vale a pena fingir o contrário.
+    </blockquote>
+
+    <p>
+      O objectivo era perceber como combinar matrizes e os cálculos da IA
+      moderna num ambiente simples e limitado — um telemóvel, ou um computador
+      com menos de 8 GB de RAM. Parecia um caminho desafiante.
+    </p>
+    <p>
+      <strong>No final de Junho de 2026, o MVG-1 fez isso.</strong> Embeddings
+      densos, atenção ponderada, gradiente, treino com loss — as peças que
+      resolvem o problema, no tamanho certo para este regime de dados. Não é um
+      transformer completo, e não devia ser: com dezenas de gatilhos por tag,
+      atenção multi-cabeça de milhões de parâmetros decora em vez de
+      generalizar.
+    </p>
+    <p>
+      A lona ainda não é cimento. Mas a fundação está lançada.
+    </p>
+  </section>
+
+  <!-- ══ PARA QUEM ══ -->
+  <section class="env">
+    <p class="rotulo">Para quem</p>
+    <h2>A mana que vende tomate</h2>
+
+    <p>
+      Imagina uma mana que vende tomate num mercado de dumba nengue. Aparece um
+      termo que, mesmo simplificado em português formal, continua complicado. E
+      não há ninguém por perto para lho explicar. Não há professor nenhum.
+    </p>
+    <p>
+      A Matola foi feita para isso. Um cidadão informal pode desligar-se de um
+      sistema que não sabe viver a realidade em que ele vive.
+    </p>
+    <p>
+      O objectivo é chegar a quem não tem condições reunidas para fazer cursos,
+      pagar chapas, mensalidades ou propinas. A quem quer trilhar um caminho
+      próprio e independente — por dinheiro, ou por escolha.
+    </p>
+
+    <h3>A Matola não é a única que fala Calão</h3>
+    <p>
+      E não vale a pena fingir que é. Os modelos de linguagem evoluíram, e o
+      <strong>ChatGPT</strong>, o <strong>Claude</strong> e o
+      <strong>DeepSeek</strong> são hoje os três apontados como os melhores
+      nisto. Não são os únicos que dominam — mas são o topo. Em alguns casos,
+      falam Calão melhor que a Matola.
+    </p>
+    <p>
+      O que a Matola faz diferente é <strong>exagerar</strong>. Usa Calão de
+      forma extrema e explora-o mais fundo do que qualquer outro sistema. Não
+      traduz para Calão: pensa dentro dele.
+    </p>
+    <p>
+      E depois há o resto, que nenhum deles tem:
+    </p>
+    <ul>
+      <li>Funciona <strong>completamente offline</strong></li>
+      <li>Corre <strong>dentro do teu Android</strong>, sem servidor</li>
+      <li>É <strong>completamente grátis</strong></li>
+    </ul>
+    <p>
+      É aí que a Matola ganha. Não em ser a melhor a falar Calão — em ser a
+      única que fala Calão no chapa, sem rede e sem saldo.
+    </p>
+
+    <h3>Mas a Matola não é isso tudo</h3>
+    <p>
+      Ela não chega como um acto de injustiça, de rebeldia ou de revolta contra
+      a educação por esta rejeitar o sector informal. E não vem competir nem
+      substituir:
+    </p>
+    <ul class="nao">
+      <li>Nenhum professor</li>
+      <li>Nenhum docente</li>
+      <li>Nenhum modelo de linguagem de ponta</li>
+    </ul>
+    <p>
+      É um <strong>recurso opcional</strong> para quem procura independência e
+      ensino assente na sua própria realidade. Nada mais do que isso.
+    </p>
+  </section>
+
+  <div class="env"><div class="pauta"></div></div>
+
+  <!-- ══ LIMITES ══ -->
+  <section class="env">
+    <p class="rotulo">Limites</p>
+    <h2>O que ela ainda não sabe</h2>
+
+    <div class="aviso">
+      <p>
+        <strong>A Matola é muito limitada e não sabe tudo.</strong> Ela também
+        tropeça. Nem sempre o que diz está certo.
+      </p>
+      <p style="margin-bottom:0">
+        Verifica sempre noutras fontes de confiança.
+      </p>
+    </div>
+
+    <p>
+      Sendo offline, é pesada. É um sistema pré-treinado de raiz, e isso tem
+      consequências: precisa de um telemóvel com alguma folga. O que é
+      desagradável para quem não tem condições de ter um.
+    </p>
+    <p>
+      Esta é a <strong>5.ª classe</strong> — a primeira versão pública. Há
+      ambiguidade, há vocabulário que falta, há quebras gramaticais e respostas
+      desalinhadas com a pergunta. Não é acidente: é o estado declarado desta
+      versão, e cada uma das próximas existe para o corrigir.
+    </p>
+  </section>
+
+  <div class="env"><div class="pauta"></div></div>
+
+  <!-- ══ AS CLASSES ══ -->
+  <section class="env">
+    <p class="rotulo">O caminho</p>
+    <h2>As classes</h2>
+
+    <p>
+      A Matola cresce por classes. Cada uma é um voluntário novo, com mais
+      traduções calãnísticas do que o anterior.
+    </p>
+
+    <div class="classes">
+      <div class="classe agora">
+        <div class="num">5.ª</div>
+        <div>
+          <h4>Primeira versão pública <span class="agora-tag">AGORA</span></h4>
+          <p>12.000 traduções calãnísticas</p>
+        </div>
+      </div>
+      <div class="classe">
+        <div class="num">10.ª</div>
+        <div>
+          <h4>Em desenvolvimento</h4>
+          <p>150.000 traduções · melhor reconhecimento de intenção · menos desalinhamento · planos curriculares completos, offline</p>
+        </div>
+      </div>
+      <div class="classe">
+        <div class="num">15.ª</div>
+        <div>
+          <h4>2.º semestre de 2027</h4>
+          <p>350.000 traduções</p>
+        </div>
+      </div>
+      <div class="classe">
+        <div class="num">20.ª</div>
+        <div>
+          <h4>Janeiro de 2028</h4>
+          <p>500.000 traduções · junta todos os anteriores</p>
+        </div>
+      </div>
+    </div>
+
+  </section>
+
+  <div class="env"><div class="pauta"></div></div>
+
+  <!-- ══ PRÁTICO ══ -->
+  <section class="env">
+    <p class="rotulo">Prático</p>
+    <h2>O que precisas</h2>
+
+    <div class="tecnico">
+      Android &nbsp;&nbsp;&nbsp;&nbsp;5.0 ou superior<br>
+      RAM &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2 GB, no mínimo<br>
+      Espaço &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;500 MB livres<br>
+      Tamanho &nbsp;&nbsp;&nbsp;&nbsp;menos de 100 MB<br>
+      Idade &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;18+<br>
+      Internet &nbsp;&nbsp;&nbsp;nenhuma
+    </div>
+
+    <h3>A abertura demora</h3>
+    <p>
+      Quando abres a Matola, ela tem de carregar os dados treinados para poder
+      funcionar offline. Pode levar até um minuto. É o preço de ter tudo dentro
+      do telemóvel e nada num servidor.
+    </p>
+
+    <h3>A Matola é grátis</h3>
+    <p>
+      Não tem custo, não tem subscrições, não tem compras dentro da aplicação e
+      não tem publicidade. Se alguém te pedir dinheiro para te dar acesso à
+      Matola, ou te oferecer uma versão paga, não é oficial.
+    </p>
+
+    <h3>E não recolhe nada</h3>
+    <p>
+      A aplicação não tem permissão de acesso à internet. Não é promessa de
+      marketing: é uma limitação técnica imposta pelo próprio Android. Ela não
+      consegue enviar nada para lado nenhum, mesmo que quisesse.
+    </p>
+    <ul class="nao">
+      <li>Não recolhe dados</li>
+      <li>Não pede conta nem registo</li>
+      <li>Não mostra publicidade</li>
+      <li>Não custa nada</li>
+    </ul>
+
+    <h3>Porquê 18+</h3>
+    <p>
+      A Matola comunica em Calão Moçambicano — o registo urbano real, sem
+      filtro académico. É essa a língua, e não a vamos limpar para parecer
+      outra coisa. Uma versão pensada para crianças e adolescentes está
+      planeada.
+    </p>
+
+    <p>
+      O foco é Android. iOS, Windows, PC e Mac estão em planos futuros.
+    </p>
+  </section>
+
+  <div class="env"><div class="pauta"></div></div>
+
+  <!-- ══ ORIGEM ══ -->
+  <section class="env">
+    <p class="rotulo">Origem</p>
+    <h2>Quatro anos em silêncio</h2>
+
+    <p>
+      A Matola foi evoluindo de <strong>2022 a 2026</strong>, sem equipa
+      humana. Começou como ideia, protótipo e frontend, e foi mudando de forma
+      à medida que a tecnologia à volta mudava.
+    </p>
+    <p>
+      Foi construída com a ajuda de modelos de linguagem — ChatGPT no início,
+      DeepSeek na geração de exemplos de interacções em Calão, e Claude na
+      engenharia do que está por detrás dela hoje. Nenhum deles vive dentro da
+      Matola: a app final não fala com servidor nenhum.
+    </p>
+    <p>
+      O nome não vem do município, do bairro nem da cidade.
+    </p>
+  </section>
+
+  <div class="env"><div class="pauta"></div></div>
+
+  <!-- ══ QUEM ══ -->
+  <section class="env">
+    <p class="rotulo">Quem</p>
+    <h2>Filipe Paulo Filipe</h2>
+
+    <p>
+      <strong>FPF</strong>. Natural de Maputo, nascido e criado nos arredores
+      da cidade.
+    </p>
+    <p>
+      Começou o desenvolvimento da Matola em <strong>2022, com 19 anos</strong>.
+      Lançou-a em <strong>2026, com 22</strong>.
+    </p>
+    <p>
+      É o responsável pelo desenvolvimento e pela transformação da Matola — pelo
+      menos até ao volume da 5.ª classificação.
+    </p>
+
+    <p class="rotulo" style="margin-top:2.5rem">Nas palavras dele</p>
+    <blockquote>
+      <p>
+        Não sou nenhum engenheiro de IA ou de programação, especialista nem
+        formado. Sou investigador, pesquisador, testador, experimentador e
+        arquitecto de sistemas. Actuo na área da ciência da computação e do
+        machine learning. E nada mais além disso.
+      </p>
+      <p style="margin-bottom:0">
+        A Matola é um sistema feito de fã para fã — por um fã da língua
+        informal mais falada em Moçambique.
+      </p>
+      <cite>— FPF</cite>
+    </blockquote>
+  </section>
 
 </main>
+
+<div class="env"><div class="pauta"></div></div>
+
+<footer class="env">
+  <p class="rotulo">Documentos e contacto</p>
+
+  <div class="docs">
+    <a href="politica-privacidade.html">Política de Privacidade</a>
+    <a href="termos-de-uso.html">Termos de Uso</a>
+    <a href="mailto:lundomachava@gmail.com">lundomachava@gmail.com</a>
+  </div>
+
+  <p class="assinatura">
+    MATOLA CAT-CM<br>
+    CADERNO ARTIFICIAL DE TRADUÇÕES CALÃNÍSTICAS MOÇAMBICANAS<br>
+    MAPUTO · MOÇAMBIQUE🇲🇿 2026
+  </p>
+</footer>
+
 </body>
 </html>
